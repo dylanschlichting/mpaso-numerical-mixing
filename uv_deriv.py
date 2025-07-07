@@ -73,6 +73,18 @@ if (__name__ == "__main__"):
             "dVdy_cell", "f4", ("Time", "nCells", "nVertLevels"))
         flow["dVdy_cell"].long_name = \
             "cartesian dV/dy, remapped to cells"
+    
+    if ("dSdx_cell" not in flow.variables.keys()):
+        flow.createVariable(
+            "dSdx_cell", "f4", ("Time", "nCells", "nVertLevels"))
+        flow["dSdx_cell"].long_name = \
+            "cartesian dS/dx, remapped to cells"
+    
+    if ("dSdy_cell" not in flow.variables.keys()):
+        flow.createVariable(
+            "dSdy_cell", "f4", ("Time", "nCells", "nVertLevels"))
+        flow["dSdy_cell"].long_name = \
+            "cartesian dS/dy, remapped to cells"
 
     # loop through steps in file and LSQR reconstruct tensor from
     # unstructured velocities
