@@ -95,7 +95,7 @@ def center_vertices(dsg, hres):
 # reformat restart files to eliminate duplicate time values(i.e., where restart files overlap)
 def reformat_restart(res_choice):
     filepath = f'/pscratch/sd/k/kuyeda/bichan/mpaso/{res_choice}/'
-    dso_all = xr.open_mfdataset(filepath + 'output_member_*.nc',combine='nested',join="outer",concat_dim='Time')
+    dso_all = xr.open_mfdataset(filepath + 'output_member_*.nc',combine='nested',join="outer",concat_dim='Time')[['xtime','Time','layerThickness']]
     dso_all = dso_all.sortby(dso_all.xtime) # Sort by xtime in ascending order
     unique_xtime, unique_indices = np.unique(dso_all.xtime.values, return_index=True)
     # Now, re-index the xarray object based on the unique indices
@@ -110,12 +110,12 @@ def reformat_restart(res_choice):
     dsd_unique = dsd_all.isel(Time=unique_indices)
     dsd = dsd_unique.isel(Time=slice(0,361))
 
-    dsg = xr.open_dataset(filepath + f'{res_choice}_channel_init.nc')
-    print('time series in one .nc file. dso, dsd, dsg files created.')
+    dsg = xr.open_dataset(filepath + f'{res_choice}_channel_init.nc')[['xVertex','nVertLevels','verticesOnCell','areaCell','nCells']]
+    print('time series in one .nc file. dso, dsd, dsg files created.', flush=True)
 
     return dso,dsd,dsg
 
-# create netcdf files of individual time slices
+# create array of time slices
 def time_slices(dso,dsd,num_files):
     dsos = []
     dsds = []
@@ -131,7 +131,7 @@ def time_slices(dso,dsd,num_files):
 
         dsd_slice = dsd.isel(Time=slice(slice_lowerbound,slice_upperbound))
         dsds.append(dsd_slice)
-        print('.nc files for time slices created')
+    print('array of time slices created',flush=True)
     return dsos,dsds
 
 
@@ -152,7 +152,7 @@ def mixing(dso,dsd,dsg,res_choice_meters,res_choice,slice_num):
     # convert to dataset
     mnum_ds = mnum_salt_dv.to_dataset(name = 'int_VchiSpurSaltBR08dV')
     mphys_ds = mphys_salt_dv.to_dataset(name = 'int_VchiPhysSaltBR08dV')
-    print(f'slice {slice_num} converted to ds')
+    print(f'slice {slice_num} converted to ds',flush=True)
 
     # merge with xtimes
     xtimes = dso.xtime.to_dataset(name='xtime')
@@ -165,7 +165,7 @@ def mixing(dso,dsd,dsg,res_choice_meters,res_choice,slice_num):
     mphys_xtime_ds.to_netcdf(rootdir + f'mphys/{res_choice}_mphys_output_member_{slice_num}.nc', mode = 'w', format='NETCDF4')
 
 
-    print(f'slice {slice_num} mixing saved as .nc')
+    print(f'slice {slice_num} mixing saved as .nc',flush=True)
 
 
 # require variables
