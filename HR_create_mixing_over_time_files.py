@@ -106,11 +106,11 @@ def reformat_restart(res_choice):
                                 combine='nested',join="outer",concat_dim='Time')
     dsd_all = dsd_all.sortby(dsd_all.xtime) # Sort by xtime in ascending order
     unique_xtime, unique_indices = np.unique(dsd_all.xtime.values, return_index=True)
-    # Now, re-index the xarray object based on the unique indices
+    # Now, re-index the xarray object based on the unique indiceg
     dsd_unique = dsd_all.isel(Time=unique_indices)
     dsd = dsd_unique.isel(Time=slice(0,361))
 
-    dsg = xr.open_dataset(filepath + f'{res_choice}_channel_init.nc')[['xVertex','nVertLevels','verticesOnCell','areaCell','nCells']]
+    dsg = xr.open_dataset(filepath + f'{res_choice}_channel_init.nc')[['xCell','yCell','xVertex','yVertex','nVertLevels','verticesOnCell','areaCell','nCells']]
     print('time series in one .nc file. dso, dsd, dsg files created.', flush=True)
 
     return dso,dsd,dsg
