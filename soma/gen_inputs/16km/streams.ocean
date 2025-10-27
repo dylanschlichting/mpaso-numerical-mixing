@@ -1,0 +1,258 @@
+<streams>
+
+<immutable_stream name="mesh"
+                  type="input"
+                  filename_template="mesh.nc"
+                  input_interval="initial_only"/>
+
+<immutable_stream name="input"
+                  type="input"
+                  filename_template="init.nc"
+                  input_interval="initial_only"/>
+
+<immutable_stream name="restart"
+                  type="input;output"
+                  filename_template="restarts/restart.$Y-$M-$D_$h.$m.$s.nc"
+                  filename_interval="output_interval"
+                  reference_time="0001-01-01_00:00:00"
+                  clobber_mode="truncate"
+                  input_interval="initial_only"
+                  output_interval="0090_00:00:00"/>
+
+<stream name="output"
+        type="output"
+        filename_template="output/output.$Y-$M-$D_$h.$m.$s.nc"
+        filename_interval="01-00-00_00:00:00"
+        reference_time="0001-01-01_00:00:00"
+        clobber_mode="overwrite"
+        precision="double"
+        output_interval="0007_00:00:00">
+
+    <stream name="mesh"/>
+    <var_struct name="tracers"/>
+    <var name="layerThickness"/>
+    <var name="normalVelocity"/>
+    <var name="ssh"/>
+    <var name="maxLevelEdgeTop"/>
+    <var name="vertCoordMovementWeights"/>
+    <var name="edgeMask"/>
+    <var name="vertexMask"/>
+    <var name="cellMask"/>
+    <var name="refZMid"/>
+    <var name="refLayerThickness"/>
+    <var name="xtime"/>
+    <var name="zMid"/>
+    <var name="zTop"/>
+    <var name="kineticEnergyCell"/>
+    <var name="relativeVorticityCell"/>
+    <var name="velocityZonal"/>
+    <var name="velocityMeridional"/>
+    <var name="density"/>
+    <var name="divergence"/>
+    <var name="displacedDensity"/>
+    <var name="potentialDensity"/>
+    <var name="boundaryLayerDepth"/>
+    <var name="indexBoundaryLayerDepth"/>
+    <var name="indexSurfaceLayerDepth"/>
+    <var name="surfaceFrictionVelocity"/>
+    <var name="surfaceBuoyancyForcing"/>
+    <var name="seaIcePressure"/>
+    <var name="atmosphericPressure"/>
+    <var name="windStressZonal"/>
+    <var name="windStressMeridional"/>
+    <var name="BruntVaisalaFreqTop"/>
+</stream>
+
+<stream name="forcing_data"
+        type="input"
+        filename_template="forcing.nc"
+        input_interval="initial_only">
+
+    <var_array name="activeTracersPistonVelocity"/>
+    <var_array name="activeTracersSurfaceRestoringValue"/>
+    <var name="windStressZonal"/>
+    <var name="windStressMeridional"/>
+</stream>
+
+<stream name="globalStatsOutput"
+        type="output"
+        filename_template="analysis_members/globalStats.$Y-$M-$D_$h.$m.$s.nc"
+        filename_interval="01-00-00_00:00:00"
+        clobber_mode="overwrite"
+        packages="globalStatsAMPKG"
+        output_interval="0001_00:00:00">
+
+    <var_array name="minGlobalStats"/>
+    <var_array name="maxGlobalStats"/>
+    <var_array name="sumGlobalStats"/>
+    <var_array name="rmsGlobalStats"/>
+    <var_array name="avgGlobalStats"/>
+    <var_array name="vertSumMinGlobalStats"/>
+    <var_array name="vertSumMaxGlobalStats"/>
+    <var name="xtime"/>
+    <var name="daysSinceStartOfSim"/>
+    <var name="volumeCellGlobal"/>
+    <var name="CFLNumberGlobal"/>
+</stream>
+
+<stream name="zonalMeanOutput"
+        type="output"
+        filename_template="analysis_members/zonalMeans.$Y-$M-$D_$h.$m.$s.nc"
+        filename_interval="01-00-00_00:00:00"
+        clobber_mode="overwrite"
+        precision="double"
+        packages="zonalMeanAMPKG"
+        output_interval="0003_00:00:00">
+
+    <var_array name="tracersZonalMean"/>
+    <var name="xtime"/>
+    <var name="binCenterZonalMean"/>
+    <var name="binBoundaryZonalMean"/>
+    <var name="velocityZonalZonalMean"/>
+    <var name="velocityMeridionalZonalMean"/>
+    <var name="refZMid"/>
+    <var name="refBottomDepth"/>
+</stream>
+
+<stream name="highFrequencyOutput"
+        type="output"
+        filename_template="analysis_members/highFrequencyOutput.$Y-$M-$D.nc"
+        filename_interval="01-00-00_00:00:00"
+        reference_time="0001-01-01_00:00:00"
+        clobber_mode="overwrite"
+        precision="double"
+        packages="highFrequencyOutputAMPKG"
+        output_interval="00-00-01_00:00:00">
+
+    <stream name="mesh"/>
+    <var_array name="activeTracersAtSurface"/>
+    <var_array name="activeTracersAt250m"/>
+    <var_array name="activeTracersAvgTopto0100"/>
+    <var_array name="activeTracersAvg0100to0250"/>
+    <var_array name="activeTracersAvg0250to0700"/>
+    <var_array name="activeTracersAvg0700to2000"/>
+    <var_array name="activeTracersAvg2000toBottom"/>
+    <var name="xtime"/>
+    <var name="kineticEnergyAtSurface"/>
+    <var name="relativeVorticityAtSurface"/>
+    <var name="divergenceAtSurface"/>
+    <var name="ssh"/>
+    <var name="kineticEnergyAt250m"/>
+    <var name="relativeVorticityAt250m"/>
+    <var name="divergenceAt250m"/>
+    <var name="barotropicSpeed"/>
+    <var name="columnIntegratedSpeed"/>
+    <var name="relativeVorticityVertexAt250m"/>
+    <var name="boundaryLayerDepth"/>
+    <var name="vertGMvelocitySFC"/>
+    <var name="vertTransportVelocitySFC"/>
+    <var name="vertVelSFC"/>
+    <var name="divergenceTransportVelAt250m"/>
+    <var name="vertGMvelocityAt250m"/>
+    <var name="vertTransportVelocityAt250m"/>
+    <var name="vertVelAt250m"/>
+    <var name="normalVelAt250m"/>
+    <var name="tangentialVelAt250m"/>
+    <var name="BruntVaisalaFreqTopAt250m"/>
+    <var name="windStressZonal"/>
+    <var name="windStressMeridional"/>
+    <var name="divergenceAtBottom"/>
+</stream>
+
+<stream name="timeSeriesStatsCustomOutput"
+        type="output"
+        filename_template="analysis_members/mpaso.hist.am.timeSeriesStatsCustom.$Y-$M-$D.nc"
+        filename_interval="00-01-00_00:00:00"
+        reference_time="01-01-01_00:00:00"
+        clobber_mode="truncate"
+        precision="double"
+        packages="timeSeriesStatsCustomAMPKG"
+        output_interval="0007_00:00:00">
+
+        <var name="xtime"/>
+        <var name="layerThickness"/>
+        <var_array name="chiSpurTracerBR08"/>
+        <var_array name="chiPhyVerTracer"/>
+</stream>
+
+<stream name="timeSeriesStatsCustomRestart"
+        type="input;output"
+        filename_template="restarts/restart.AM.timeSeriesStatsCustom.$Y-$M-$D_$h.$m.$s.nc"
+        filename_interval="00-01-00_00:00:00"
+        reference_time="0001-01-01_00:00:00"
+        clobber_mode="truncate"
+        packages="timeSeriesStatsCustomAMPKG"
+        input_interval="initial_only"
+        output_interval="stream:restart:output_interval" >
+</stream>
+
+<stream name="timeSeriesStatsMonthlyRestart"
+        type="input;output"
+        filename_template="restarts/restart.AM.timeSeriesStatsMonthly.$Y-$M-$D_$h.$m.$s.nc"
+        filename_interval="output_interval"
+        reference_time="0001-01-01_00:00:00"
+        clobber_mode="truncate"
+        packages="timeSeriesStatsMonthlyAMPKG"
+        input_interval="initial_only"
+        output_interval="stream:restart:output_interval" >
+</stream>
+
+<stream name="eddyProductVariablesOutput"
+        type="output"
+        precision="single"
+        io_type="netcdf"
+        filename_template="analysis_members/mpaso.hist.am.eddyProductVariables.$Y-$M-$D.nc"
+        filename_interval="00-01-00_00:00:00"
+        reference_time="01-01-01_00:00:00"
+        output_interval="00-01-00_00:00:00"
+        clobber_mode="truncate"
+        packages="eddyProductVariablesAMPKG">
+
+    <var name="xtime"/>
+    <var name="SSHSquared"/>
+    <var name="velocityZonalSquared"/>
+    <var name="velocityMeridionalSquared"/>
+</stream>
+
+
+<stream name="timeSeriesStatsMonthlyOutput"
+        type="output"
+        filename_template="analysis_members/timeSeriesStatsMonthly.$Y-$M.nc"
+        filename_interval="0000-01-00_00:00:00"
+        reference_time="0001-01-01_00:00:00"
+        clobber_mode="truncate"
+        packages="timeSeriesStatsMonthlyAMPKG"
+        output_interval="00-01-00_00:00:00" >
+
+        <var name="xtime"/>
+        <var_array name="activeTracers"/>
+        <var name="normalVelocity"/>
+        <var name="vertVelocityTop"/>
+        <var_array name="avgValueWithinOceanRegion"/>
+        <var_array name="avgValueWithinOceanLayerRegion"/>
+        <var name="dThreshMLD"/>
+        <var name="meridionalHeatTransportLatZ"/>
+        <var name="meridionalHeatTransportLat"/>
+        <var name="velocityZonal"/>
+        <var name="velocityZonalSquared"/>
+        <var name="velocityMeridional"/>
+        <var name="velocityMeridionalSquared"/>
+        <var name="layerThickness"/>
+</stream>
+
+<stream name="discreteVarianceDecayOutput"
+        type="output"
+        filename_template="analysis_members/discreteVarianceDecay.$Y-$M-$D.nc"
+        filename_interval="01-00-00_00:00:00"
+        reference_time="0001-01-01_00:00:00"
+        clobber_mode="truncate"
+        precision="single"
+        packages="discreteVarianceDecayAMPKG"
+        output_interval="0007_00:00:00" >
+
+        <var name="xtime"/>
+        <var_array name="chiSpurTracerBR08"/>
+        <var_array name="chiPhyVerTracer"/>
+</stream>
+
+</streams>
