@@ -1,6 +1,7 @@
 # Modifies the idealized submesoscale baroclinic channel described in
 # Hetland et al. (2025) JPO. MPAS-O can be setup as a linear advection 
 # equation using a top hat profile in the along-channel direction.
+
 import numpy as np
 import xarray
 from mpas_tools.planar_hex import make_planar_hex_mesh
@@ -13,8 +14,8 @@ num_xcell = 100#200#100
 # ycell = [2*sqrt(3)] * num-xcell / 3 to yield a LX=LY domain
 num_ycell = 116#232#116
 len_edges = 1.0#0.5
-num_layer = 2
-bot_depth = 2
+num_layer = 1
+bot_depth = 1
 
 # --- Top-hat profile ---
 def s0(x):
@@ -22,20 +23,6 @@ def s0(x):
 
 def t0(x):
     return np.where((x >= 35) & (x <= 65), 1.0, 0.0)
-
-# --- Gaussian profile ---
-# def s0(x):
-#     # Center at 50, standard deviation to control width (e.g., 10)
-#     center = 50
-#     std_dev = 10
-#     return np.exp(-0.5 * ((x - center) / std_dev)**2)
-
-# def t0(x):
-#     # Same Gaussian for t0
-#     center = 50
-#     std_dev = 10
-#     return np.exp(-0.5 * ((x - center) / std_dev)**2)
-
 
 # --- Create planar hex mesh ---
 mesh = make_planar_hex_mesh(

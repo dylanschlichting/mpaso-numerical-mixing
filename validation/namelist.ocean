@@ -373,7 +373,7 @@
     config_n_bcl_iter_end = 2
 /
 &split_explicit_ts
-    config_btr_dt = '0000-00-00_00:00:00.05'
+    config_btr_dt = '0000-00-00_00:00:00.0255555'
     config_n_btr_cor_iter = 2
     config_vel_correction = .true.
     config_btr_subcycle_loop_factor = 2
@@ -872,7 +872,7 @@
     config_AM_timeSeriesStatsCustom_enable = .false.
     config_AM_timeSeriesStatsCustom_compute_on_startup = .false.
     config_AM_timeSeriesStatsCustom_write_on_startup = .false.
-    config_AM_timeSeriesStatsCustom_compute_interval = '00-00-00_01:00:00'
+    config_AM_timeSeriesStatsCustom_compute_interval = 'dt'
     config_AM_timeSeriesStatsCustom_output_stream = 'timeSeriesStatsCustomOutput'
     config_AM_timeSeriesStatsCustom_restart_stream = 'timeSeriesStatsCustomRestart'
     config_AM_timeSeriesStatsCustom_operation = 'avg'
@@ -880,7 +880,7 @@
     config_AM_timeSeriesStatsCustom_duration_intervals = 'repeat_interval'
     config_AM_timeSeriesStatsCustom_repeat_intervals = 'reset_interval'
     config_AM_timeSeriesStatsCustom_reset_intervals = '00-00-07_00:00:00'
-    config_AM_timeSeriesStatsCustom_backward_output_offset = '00-00-01_00:00:00'
+    config_AM_timeSeriesStatsCustom_backward_output_offset = '00-00-00_00:00:00'
 /
 &AM_pointwiseStats
     config_AM_pointwiseStats_enable = .false.
