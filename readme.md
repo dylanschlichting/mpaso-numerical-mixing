@@ -186,3 +186,6 @@ and load your compass environment. Then go to ```long/initial_state``` for each 
 srun -n <nranks> ./ocean_model -n namelist.ocean -s streams.ocean
 ```
 I prefer to run it explicitly so namelist options are not overwritten here by ```compass run```. amelists for each horizontal resolution, which are the same for both vertical grids, can be copied from this repository in ```soma/gen_inputs/``` into each case. 
+
+### Validation
+Numerical and physical mixing online validation is done in ```validation/```. Numerical mixing is verified by setting up MPAS-O as a 1D linear advection problem in a doubly periodic channel and ensuring convergence of the tracer variance budget. Since spatial gradients are difficult to calculate, this domain ensures that the advection term drops out when volume integrating, so the tendency of the tracer variance is exactly equal to the numerical mixing. The python file to make the initial conditions, namelist, and streams are there. Simply copy the executable into that directory and run with any number of cores, it takes ~5 seconds with 128 cores (which is overkill). Physical mixing is validated by comparing online and offline calculations with 1km bichan. Offline in this case means using snapshots of the vertical diffusivity and vertical salinity gradients. This can be done for any domain, not just bichan. 
