@@ -21,7 +21,7 @@ E3SM/components/mpas-framework/src/core_ocean/mode_forward/mpas_ocn_time_integra
   - numericalMixingTracers(3) = activeTracersNew(indexTemperature)**2
   - numericalMixingTracers(4) = activeTracersNew(indexSalinity)**2
 ```
-The tracers have to be initialized at each DT to reflect the instantaneous active tracers that should then only be advected. This is how ROMS does too -- directly enforcing the values inside the master do loop. 
+The tracers have to be initialized at each DT to reflect the instantaneous active tracers that should then only be advected. This is how ROMS does it too -- directly enforcing the values inside the master do loop. 
 
 So, we added one new tracer group and one new analysis member. 
 
@@ -29,7 +29,7 @@ So, we added one new tracer group and one new analysis member.
 The main tracer tendency routine contains explicit checks that ensure non-advection tendencies are not applied to `numericalMixingTracers` in ```E3SM/components/mpas-ocean/src/shared/mpas_ocn_tendency.F```
 
 - QC / forced-flag checks and explicit rejections:
-  - Srface restoring, interior restoring, exponential decay, ideal age, and TTD for `numericalMixingTracers`.
+  - Surface restoring, interior restoring, exponential decay, ideal age, and TTD for `numericalMixingTracers`.
 - Horizontal mixing (hmix) is skipped for the group:
   - Guard: `if (trim(groupItr % memberName) /= 'numericalMixingTracers') then` before `ocn_tracer_hmix_tend`.
 - KPP non-local fluxes are not applied:
